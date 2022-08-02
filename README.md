@@ -1,8 +1,9 @@
 # StoryFilm
 
-/ -> home (인화 팝업, blank, 필름선택 팝업, 로그인 하기 전 intro)
-/print -> 인화 직전 스크롤 --> read
-/write -> 일기작성
+/ -> layout  
+/home (인화 팝업, blank, 필름선택 팝업, 로그인 하기 전 intro)
+/home/print -> 인화 직전 스크롤 --> read
+/home/write -> 일기작성
 /read -> 일기열람
 
 /films -> 필름 보관함
