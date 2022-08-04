@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { colors } from "./colors";
 import Albums from "./routers/Albums";
 import Films from "./routers/Films";
 import Home from "./routers/Home";
@@ -11,7 +12,7 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home mainBgColor={colors.mainBgColor} />} />
         <Route path="/write" element={<Write />} />
         <Route path="/films" element={<Films />} />
         <Route path="/read" element={<Read />} />

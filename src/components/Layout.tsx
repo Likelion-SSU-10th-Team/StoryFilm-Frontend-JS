@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div<ContainerProps>`
@@ -48,7 +49,9 @@ const Layout = ({ bgColor }: ContainerProps) => {
       <Header>
         <Column>
           <Logo>📽</Logo>
-          <Title>STORY FILM</Title>
+          <Link to={"/"}>
+            <Title>STORY FILM</Title>
+          </Link>
         </Column>
         <Column>
           <Profile>김상민's story |</Profile>

@@ -1,0 +1,15 @@
+{
+  "status": "ok",
+  "data": {
+    "stories": [
+      {
+        "id": 1,
+        "photo": "https://images.unsplash.com/photo-1600461186623-d5551c00fc85?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2133&q=80"
+      },
+      {
+        "id": 2,
+        "photo": "https://images.unsplash.com/photo-1626379625260-7111605463e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fG5pa2V8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
+      }
+    ]
+  }
+}
