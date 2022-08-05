@@ -3,6 +3,8 @@ import Layout from "../components/Layout";
 import { colors } from "../colors";
 import styled from "styled-components";
 import Story from "../components/Story";
+import film from "../assets/film.jpg";
+import button from "../assets/button.jpg";
 
 const Container = styled.div``;
 
@@ -21,8 +23,10 @@ const Frame = styled.div`
   width: 900px;
   height: 600px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 
 const ContentBox = styled.div<ContentBoxProps>`
@@ -33,6 +37,28 @@ const ContentBox = styled.div<ContentBoxProps>`
 `;
 
 const Film = styled.div``;
+
+const EmptyFilm = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+const SelectFilm = styled.button`
+  border: none;
+  background-color: white;
+  width: 160px;
+  position: absolute;
+  bottom: 15px;
+  right: 60px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const SelectFilmImg = styled.img`
+  width: 100%;
+  height: 100%;
+`;
 
 interface ContentBoxProps {
   mainBgColor: string;
@@ -48,18 +74,23 @@ interface StoriesDataProps {
 }
 
 const Home = ({ mainBgColor }: HomeProps) => {
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [stories, setStories] = useState<StoriesDataProps[]>([]);
 
   useEffect(() => {
     (async () => {
-      const response = await fetch("../data/stories.json");
+      const response = await fetch(`../data/stories.json`, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
       const json = await response.json();
       setStories(json.data.stories);
       console.log(stories);
     })();
-    // setLoading(false);
-  }, []);
+    setLoading(false);
+  }, [stories]);
 
   return (
     <Container>
@@ -67,20 +98,23 @@ const Home = ({ mainBgColor }: HomeProps) => {
       <Body>
         <Frame>
           <ContentBox mainBgColor={mainBgColor}>
-            {/* {loading ? (
+            {loading ? (
               "loading..."
+            ) : stories === [] ? (
+              <EmptyFilm src={film} alt="Empty-Film" />
             ) : (
               <Film>
                 {stories.map((story) => (
-                  <Story
-                    id={stories.id}
-                    key={stories.id}
-                    photo={stories.photo}
-                  />
+                  <Story id={story.id} key={story.id} photo={story.photo} />
                 ))}
               </Film>
-            )} */}
+            )}
           </ContentBox>
+          {stories === [] ? (
+            <SelectFilm>
+              <SelectFilmImg src={button} alt="Select Film" />
+            </SelectFilm>
+          ) : null}
         </Frame>
       </Body>
     </Container>
