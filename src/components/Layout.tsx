@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div<ContainerProps>`
@@ -37,6 +38,17 @@ const Logout = styled.button`
   border: none;
   background-color: white;
 `;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+
+  &:focus,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+  color: black;
+`;
 
 interface ContainerProps {
   bgColor: string;
@@ -48,7 +60,9 @@ const Layout = ({ bgColor }: ContainerProps) => {
       <Header>
         <Column>
           <Logo>📽</Logo>
-          <Title>STORY FILM</Title>
+          <StyledLink to={"/"}>
+            <Title>STORY FILM</Title>
+          </StyledLink>
         </Column>
         <Column>
           <Profile>김상민's story |</Profile>
