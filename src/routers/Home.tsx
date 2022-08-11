@@ -79,12 +79,7 @@ const Home = ({ mainBgColor }: HomeProps) => {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch(`../data/stories.json`, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
+      const response = await fetch("./stories.json");
       const json = await response.json();
       setStories(json.data.stories);
       console.log(stories);
