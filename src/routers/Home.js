@@ -2,41 +2,43 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { colors } from "../colors";
 import styled from "styled-components";
-import Story from "../components/Story";
 import film from "../assets/film.jpg";
 import button from "../assets/button.jpg";
+import { AlbumNav, FilmNav } from "../components/navigation";
+import OpenedFilm from "../components/OpenedFilm";
 
 const Container = styled.div``;
 
 const Body = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
-  top: 55px;
+  top: 0%;
   width: 100vw;
   height: 100vh;
 `;
 
 const Frame = styled.div`
-  margin-top: 55px;
+  margin-top: 3.5%;
   background-color: white;
-  width: 900px;
-  height: 600px;
+  width: 62.5%;
+  height: 83%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
+  box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.8);
 `;
 
-const ContentBox = styled.div<ContentBoxProps>`
+const ContentBox = styled.div`
   background-color: ${(props) => props.mainBgColor};
-  width: 90%;
-  height: 80%;
-  margin-bottom: 5%;
+  width: 93%;
+  height: 83%;
+  margin-bottom: 5.5%;
+  box-shadow: inset 0px 2px 5px -2px rgba(0, 0, 0, 0.8);
 `;
-
-const Film = styled.div``;
 
 const EmptyFilm = styled.img`
   width: 100%;
@@ -46,10 +48,11 @@ const EmptyFilm = styled.img`
 const SelectFilm = styled.button`
   border: none;
   background-color: white;
-  width: 160px;
+  width: 11.5vw;
+  height: 6.25vh;
   position: absolute;
-  bottom: 15px;
-  right: 60px;
+  bottom: 2.5%;
+  right: 5%;
   &:hover {
     cursor: pointer;
   }
@@ -60,21 +63,31 @@ const SelectFilmImg = styled.img`
   height: 100%;
 `;
 
-interface ContentBoxProps {
-  mainBgColor: string;
-}
+const StoryCounter = styled.div`
+  position: absolute;
+  right: 6.5%;
+  bottom: 5%;
+  font-size: larger;
+  font-weight: 700;
+  color: #545454;
+`;
 
-interface HomeProps {
-  mainBgColor: string;
-}
+// interface ContentBoxProps {
+//   mainBgColor: string;
+// }
 
-interface StoriesDataProps {
-  id: string;
-  photo: string;
-}
+// interface HomeProps {
+//   mainBgColor: string;
+//   OpenedFilmProps
+// }
 
-const Home = ({ mainBgColor }: HomeProps) => {
-  const [loading, setLoading] = useState(true);
+// interface StoriesDataProps {
+//   id: string;
+//   photo: string;
+// }
+
+const Home = () => {
+  /* const [loading, setLoading] = useState(true);
   const [stories, setStories] = useState<StoriesDataProps[]>([]);
 
   useEffect(() => {
@@ -91,31 +104,34 @@ const Home = ({ mainBgColor }: HomeProps) => {
     })();
     setLoading(false);
   }, [stories]);
+  */
 
   return (
     <Container>
       <Layout bgColor={colors.bgColor} />
       <Body>
+        <FilmNav />
         <Frame>
-          <ContentBox mainBgColor={mainBgColor}>
-            {loading ? (
+          <ContentBox mainBgColor={colors.mainBgColor}>
+            {/* {loading ? (
               "loading..."
-            ) : stories === [] ? (
+            ) : stories === null ? (
               <EmptyFilm src={film} alt="Empty-Film" />
             ) : (
-              <Film>
-                {stories.map((story) => (
-                  <Story id={story.id} key={story.id} photo={story.photo} />
-                ))}
-              </Film>
-            )}
+              <OpenedFilm />
+            )}  */}
+            <OpenedFilm />
           </ContentBox>
-          {stories === [] ? (
+          {/* {stories === null ? (
             <SelectFilm>
               <SelectFilmImg src={button} alt="Select Film" />
             </SelectFilm>
-          ) : null}
+          ) : (
+            <StoryCounter>{stories.length}/15</StoryCounter>
+            )} */}
+          <StoryCounter>2/15</StoryCounter>
         </Frame>
+        <AlbumNav />
       </Body>
     </Container>
   );

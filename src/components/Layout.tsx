@@ -10,37 +10,46 @@ const Container = styled.div<ContainerProps>`
 
 const Header = styled.div`
   width: 100%;
-  height: 55px;
+  height: 7%;
   background-color: white;
   position: fixed;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0px 5px 9px -6px #000000;
 `;
 
 const Column = styled.div`
-  width: 200px;
-  height: 50px;
+  width: 50%;
+  height: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-left: 40px;
-  margin-right: 50px;
 `;
+
+const ColumnLeft = styled(Column)`
+  justify-content: flex-start;
+  padding-left: 6%;
+`;
+
+const ColumnRight = styled(Column)`
+  justify-content: flex-end;
+  padding-right: 5%;
+`;
+
 const Logo = styled.div`
-  margin: 0px 10px;
+  margin: 0 1%;
 `;
 const Title = styled.div``;
 const Profile = styled.div`
-  margin-right: 10px;
+  margin-right: 2%;
 `;
 const Logout = styled.button`
+  margin-left: 2%;
   border: none;
   background-color: white;
 `;
 const StyledLink = styled(Link)`
   text-decoration: none;
-
   &:focus,
   &:visited,
   &:link,
@@ -58,16 +67,17 @@ const Layout = ({ bgColor }: ContainerProps) => {
   return (
     <Container bgColor={bgColor}>
       <Header>
-        <Column>
+        <ColumnLeft>
           <Logo>📽</Logo>
           <StyledLink to={"/"}>
             <Title>STORY FILM</Title>
           </StyledLink>
-        </Column>
-        <Column>
-          <Profile>김상민's story |</Profile>
+        </ColumnLeft>
+        <ColumnRight>
+          <Profile>김상민's story</Profile>
+          <span>|</span>
           <Logout>로그아웃</Logout>
-        </Column>
+        </ColumnRight>
       </Header>
     </Container>
   );
