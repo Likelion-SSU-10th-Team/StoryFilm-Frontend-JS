@@ -4,6 +4,7 @@ import Layout from "../components/Layout";
 import { AlbumNavMini, MainNavMini } from "../components/navigation";
 import FilmImgSrc from "../assets/filmRing.png";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Container = styled.div``;
 
@@ -89,11 +90,22 @@ const Film = styled.div`
   height: 26vh;
   margin-left: 3.5%;
   margin-bottom: 3%;
+  position: relative;
 `;
 
 const FilmImg = styled.img`
   width: 100%;
   height: 100%;
+  z-index: 1;
+  position: absolute;
+`;
+
+const FilmDetail = styled(Link)`
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-color: inherit;
+  position: absolute;
 `;
 
 const Films = () => {
@@ -151,6 +163,7 @@ const Films = () => {
                   film.year === "2022" ? (
                     <Film key={film.id}>
                       <FilmImg src={FilmImgSrc} />
+                      <FilmDetail to={"film"} />
                     </Film>
                   ) : null
                 )}
@@ -163,6 +176,7 @@ const Films = () => {
                   film.year === "2021" ? (
                     <Film key={film.id}>
                       <FilmImg src={FilmImgSrc} />
+                      <FilmDetail to={"film"} />
                     </Film>
                   ) : null
                 )}
@@ -175,6 +189,7 @@ const Films = () => {
                   film.year === "2020" ? (
                     <Film key={film.id}>
                       <FilmImg src={FilmImgSrc} />
+                      <FilmDetail to={"film"} />
                     </Film>
                   ) : null
                 )}

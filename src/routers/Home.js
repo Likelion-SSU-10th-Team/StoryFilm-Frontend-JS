@@ -5,7 +5,7 @@ import styled from "styled-components";
 import film from "../assets/film.jpg";
 import button from "../assets/button.jpg";
 import { AlbumNav, FilmNav } from "../components/navigation";
-import OpenedFilm from "../components/OpenedFilm";
+import OpenedFilm from "../components/MainFilm";
 
 const Container = styled.div``;
 

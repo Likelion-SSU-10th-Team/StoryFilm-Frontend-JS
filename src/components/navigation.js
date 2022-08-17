@@ -4,6 +4,7 @@ import filmsNavImg from "../assets/filmBtn.png";
 import albumNavImg from "../assets/albumBtn.png";
 import mainNavMiniImg from "../assets/mainNav.png";
 import albumNavMiniImg from "../assets/albumNav.png";
+import backBtnImg from "../assets/backBtn.png";
 
 const Btn = styled.button`
   border: none;
@@ -57,6 +58,39 @@ const AlbumBtnMiniImg = styled.img`
   height: 100%;
 `;
 
+const GoBackBtnImg = styled.img`
+  width: 8vh;
+  height: 8vh;
+  position: relative;
+  right: 17%;
+  bottom: 1%;
+`;
+
+const GoBackBtn = styled.button`
+  height: 8vh;
+  width: 8vh;
+  border-radius: 50%;
+  border: none;
+  background-color: inherit;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const GoReadBtn = styled.button`
+  width: 91.2%;
+  height: 65%;
+  border: none;
+  background-color: inherit;
+  position: absolute;
+  right: 5.1%;
+  top: 17.3%;
+  z-index: 4;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export const FilmNav = () => {
   const navigate = useNavigate();
 
@@ -105,4 +139,24 @@ export const AlbumNavMini = () => {
       <AlbumBtnMiniImg src={albumNavMiniImg} />
     </AlbumBtnMini>
   );
+};
+
+export const GoBack = () => {
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
+  return (
+    <GoBackBtn onClick={goBack}>
+      <GoBackBtnImg src={backBtnImg} />
+    </GoBackBtn>
+  );
+};
+
+export const GoRead = () => {
+  const navigate = useNavigate();
+  const goRead = () => {
+    navigate("/read");
+  };
+  return <GoReadBtn onClick={goRead} />;
 };
