@@ -194,7 +194,7 @@ const Write = () => {
     }
     axios
       .post(
-        "/diary/write", //url
+        "https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.apphttps://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/diary/write", //url
         formData,
         {
           headers: {

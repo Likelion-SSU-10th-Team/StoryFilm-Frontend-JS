@@ -139,7 +139,9 @@ const Album = () => {
   const { id } = useParams();
   useEffect(() => {
     (async () => {
-      const response = await fetch(`/album/${id}`);
+      const response = await fetch(
+        `https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/album/${id}`
+      );
       const json = await response.json();
       setDiaries(json.diaries);
     })();

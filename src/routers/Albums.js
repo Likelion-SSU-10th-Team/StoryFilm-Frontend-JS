@@ -131,7 +131,9 @@ const Albums = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch("/album");
+      const response = await fetch(
+        "https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/album"
+      );
       const json = await response.json();
       setAlbums(json.albums);
     })();

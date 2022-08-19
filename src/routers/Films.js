@@ -142,9 +142,13 @@ const Films = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch("/film/all");
+      const response = await fetch(
+        "https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/film/all"
+      );
       const json = await response.json();
-      const counter = await fetch("/film/all/type");
+      const counter = await fetch(
+        "https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/film/all/type"
+      );
       const counterJson = await counter.json();
       setFilmsList(json);
       setCount(counterJson);

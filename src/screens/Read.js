@@ -264,18 +264,22 @@ const Read = () => {
   const [diarycomment, setDiaryComment] = useState([]);
   const { id } = useParams();
   useEffect(() => {
-    axios.get(`/album/edit/${id}`).then((res) => {
-      console.log("data", res.data);
-      setUseralbum(res.data.user_albums);
-      setDiaryInfo(res.data.diary_info);
-      setDiaryComment(res.data.diary_comment);
+    axios
+      .get(
+        `https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/album/edit/${id}`
+      )
+      .then((res) => {
+        console.log("data", res.data);
+        setUseralbum(res.data.user_albums);
+        setDiaryInfo(res.data.diary_info);
+        setDiaryComment(res.data.diary_comment);
 
-      // setComments(res.data.diary_comment);
-      // console.log(content);
-      // console.log(img);
-      // console.log(album);
-      // console.log(comments);
-    });
+        // setComments(res.data.diary_comment);
+        // console.log(content);
+        // console.log(img);
+        // console.log(album);
+        // console.log(comments);
+      });
   }, []);
   console.log("photo, text", diaryinfo);
 
@@ -303,10 +307,13 @@ const Read = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("/album/new/", {
-        album_id: inputs.album_id,
-        album_name: inputs.album_name,
-      })
+      .post(
+        "https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/album/new/",
+        {
+          album_id: inputs.album_id,
+          album_name: inputs.album_name,
+        }
+      )
       .then((res) => console.log(res));
 
     // setCategorys(categorys.concat(category));
@@ -345,7 +352,7 @@ const Read = () => {
   const HandleFinalSubmit = () => {
     axios
       .post(
-        "/album/select",
+        "https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/album/select",
         {
           selected_album: checkedInputs,
         },
@@ -364,7 +371,7 @@ const Read = () => {
     setComment(e.target.value);
     axios
       .post(
-        `/album/edit/${id}`,
+        `https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/album/edit/${id}`,
         {
           comment: commented,
           diary_id: id,

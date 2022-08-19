@@ -123,11 +123,15 @@ const Print = () => {
   const onClick = () => {
     navigate("/");
   };
-  axios.get("/film/inhwa").then((res) => {
-    console.log(res);
-    setPhotoes(res.data.diary);
-    console.log(photoes);
-  });
+  axios
+    .get(
+      "https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/film/inhwa"
+    )
+    .then((res) => {
+      console.log(res);
+      setPhotoes(res.data.diary);
+      console.log(photoes);
+    });
   return (
     <Container>
       <Layout bgColor={colors.bgColor} />
