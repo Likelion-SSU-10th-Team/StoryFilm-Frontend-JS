@@ -51,7 +51,7 @@ const SelectAlbum = () => {
   const onClick = () => {
     axios
       .post("/film/new", {
-        data: 15,
+        size: 15,
       })
       .then((res) => console.log(res));
     navigate("/");
