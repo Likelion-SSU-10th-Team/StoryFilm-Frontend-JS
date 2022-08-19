@@ -5,6 +5,7 @@ import albumNavImg from "../assets/albumBtn.png";
 import mainNavMiniImg from "../assets/mainNav.png";
 import albumNavMiniImg from "../assets/albumNav.png";
 import backBtnImg from "../assets/backBtn.png";
+import filmNavMiniImg from "../assets/filmNavMiniImg.png";
 
 const Btn = styled.button`
   border: none;
@@ -54,6 +55,16 @@ const AlbumBtnMini = styled(Btn)`
 `;
 
 const AlbumBtnMiniImg = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+const FilmBtnMini = styled(Btn)`
+  width: 6%;
+  height: 43%;
+`;
+
+const FilmBtnMiniImg = styled.img`
   width: 100%;
   height: 100%;
 `;
@@ -138,6 +149,18 @@ export const AlbumNavMini = () => {
     <AlbumBtnMini onClick={goToAlbums}>
       <AlbumBtnMiniImg src={albumNavMiniImg} />
     </AlbumBtnMini>
+  );
+};
+
+export const FilmNavMini = () => {
+  const navigate = useNavigate();
+  const goToFilms = () => {
+    navigate("/films");
+  };
+  return (
+    <FilmBtnMini onClick={goToFilms}>
+      <FilmBtnMiniImg src={filmNavMiniImg} />
+    </FilmBtnMini>
   );
 };
 

@@ -5,6 +5,9 @@ import { AlbumNavMini, MainNavMini } from "../components/navigation";
 import FilmImgSrc from "../assets/filmRing.png";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import red from "../assets/red.png";
+import yellow from "../assets/yellow.png";
+import grey from "../assets/grey.png";
 
 const Container = styled.div``;
 
@@ -48,7 +51,30 @@ const FilmCounter = styled.div`
   background-color: ;
   border-radius: 20px;
   border: solid 3px ${(props) => props.borderColor};
-  margin-top: -34.5%;
+  margin-top: -33%;
+`;
+
+const CounterBox = styled.div`
+  width: 100%;
+  height: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 10%;
+  margin-top: 6%;
+`;
+
+const CounterImg = styled.img``;
+
+const Counter = styled.div`
+  margin-left: 3%;
+  font-size: large;
+  font-weight: 500;
+`;
+
+const CounterTotal = styled.div`
+  text-align: center;
+  font-size: larger;
 `;
 
 const YearBox = styled.div`
@@ -109,46 +135,51 @@ const FilmDetail = styled(Link)`
 `;
 
 const Films = () => {
-  // const [loading, setLoading] = useState(true);
-  // const [filmsList, setFilmsList] = useState([]);
-  // const getFilms = async () => {
-  //   const response = await fetch("");
-  //   const json = response.json();
-  //   setFilmsList(json.data.films);
-  // };
-  // useEffect(() => {
-  //   getFilms();
-  //   setLoading(false);
-  //   return;
-  // }, [filmsList]);
+  const [loading, setLoading] = useState(true);
+  const [filmsList, setFilmsList] = useState([]);
+  const [count, setCount] = useState({});
 
-  const filmList = [
-    { id: "1", year: "2022", period: "10.05 ~ 11.15" },
-    { id: "2", year: "2022", period: "10.05 ~ 11.15" },
-    { id: "3", year: "2020", period: "10.05 ~ 11.15" },
-    { id: "4", year: "2022", period: "10.05 ~ 11.15" },
-    { id: "5", year: "2021", period: "10.05 ~ 11.15" },
-    { id: "6", year: "2022", period: "10.05 ~ 11.15" },
-    { id: "7", year: "2021", period: "10.05 ~ 11.15" },
-    { id: "8", year: "2022", period: "10.05 ~ 11.15" },
-    { id: "9", year: "2022", period: "10.05 ~ 11.15" },
-    { id: "10", year: "2020", period: "10.05 ~ 11.15" },
-    { id: "11", year: "2022", period: "10.05 ~ 11.15" },
-    { id: "12", year: "2022", period: "10.05 ~ 11.15" },
-    { id: "13", year: "2021", period: "10.05 ~ 11.15" },
-    { id: "14", year: "2022", period: "10.05 ~ 11.15" },
-    { id: "15", year: "2021", period: "10.05 ~ 11.15" },
-    { id: "16", year: "2021", period: "10.05 ~ 11.15" },
-    { id: "17", year: "2022", period: "10.05 ~ 11.15" },
-    { id: "18", year: "2022", period: "10.05 ~ 11.15" },
-    { id: "19", year: "2022", period: "10.05 ~ 11.15" },
-    { id: "20", year: "2021", period: "10.05 ~ 11.15" },
-    { id: "21", year: "2021", period: "10.05 ~ 11.15" },
-    { id: "22", year: "2021", period: "10.05 ~ 11.15" },
-    { id: "23", year: "2021", period: "10.05 ~ 11.15" },
-    { id: "24", year: "2021", period: "10.05 ~ 11.15" },
-    { id: "25", year: "2021", period: "10.05 ~ 11.15" },
-  ];
+  useEffect(() => {
+    (async () => {
+      const response = await fetch("/film/all");
+      const json = await response.json();
+      const counter = await fetch("/film/all/type");
+      const counterJson = await counter.json();
+      setFilmsList(json);
+      setCount(counterJson);
+    })();
+    setLoading(false);
+  }, []);
+  console.log(count);
+  console.log(filmsList["2022"]);
+
+  // const filmList = [
+  //   { id: "1", year: "2022", period: "10.05 ~ 11.15" },
+  //   { id: "2", year: "2022", period: "10.05 ~ 11.15" },
+  //   { id: "3", year: "2020", period: "10.05 ~ 11.15" },
+  //   { id: "4", year: "2022", period: "10.05 ~ 11.15" },
+  //   { id: "5", year: "2021", period: "10.05 ~ 11.15" },
+  //   { id: "6", year: "2022", period: "10.05 ~ 11.15" },
+  //   { id: "7", year: "2021", period: "10.05 ~ 11.15" },
+  //   { id: "8", year: "2022", period: "10.05 ~ 11.15" },
+  //   { id: "9", year: "2022", period: "10.05 ~ 11.15" },
+  //   { id: "10", year: "2020", period: "10.05 ~ 11.15" },
+  //   { id: "11", year: "2022", period: "10.05 ~ 11.15" },
+  //   { id: "12", year: "2022", period: "10.05 ~ 11.15" },
+  //   { id: "13", year: "2021", period: "10.05 ~ 11.15" },
+  //   { id: "14", year: "2022", period: "10.05 ~ 11.15" },
+  //   { id: "15", year: "2021", period: "10.05 ~ 11.15" },
+  //   { id: "16", year: "2021", period: "10.05 ~ 11.15" },
+  //   { id: "17", year: "2022", period: "10.05 ~ 11.15" },
+  //   { id: "18", year: "2022", period: "10.05 ~ 11.15" },
+  //   { id: "19", year: "2022", period: "10.05 ~ 11.15" },
+  //   { id: "20", year: "2021", period: "10.05 ~ 11.15" },
+  //   { id: "21", year: "2021", period: "10.05 ~ 11.15" },
+  //   { id: "22", year: "2021", period: "10.05 ~ 11.15" },
+  //   { id: "23", year: "2021", period: "10.05 ~ 11.15" },
+  //   { id: "24", year: "2021", period: "10.05 ~ 11.15" },
+  //   { id: "25", year: "2021", period: "10.05 ~ 11.15" },
+  // ];
 
   return (
     <Container>
@@ -159,44 +190,55 @@ const Films = () => {
             <YearBox>
               <Year>2022</Year>
               <FilmBox>
-                {filmList.map((film) =>
-                  film.year === "2022" ? (
-                    <Film key={film.id}>
+                {filmsList["2022"] &&
+                  filmsList["2022"].map((film) => (
+                    <Film key={film.film_id}>
                       <FilmImg src={FilmImgSrc} />
-                      <FilmDetail to={"film"} />
+                      <FilmDetail to={`film/${film.film_id}`} />
                     </Film>
-                  ) : null
-                )}
+                  ))}
               </FilmBox>
             </YearBox>
             <YearBox>
               <Year>2021</Year>
               <FilmBox>
-                {filmList.map((film) =>
-                  film.year === "2021" ? (
-                    <Film key={film.id}>
+                {filmsList["2021"] &&
+                  filmsList["2021"].map((film) => (
+                    <Film key={film.film_id}>
                       <FilmImg src={FilmImgSrc} />
                       <FilmDetail to={"film"} />
                     </Film>
-                  ) : null
-                )}
+                  ))}
               </FilmBox>
             </YearBox>
             <YearBox>
               <Year>2020</Year>
               <FilmBox>
-                {filmList.map((film) =>
-                  film.year === "2020" ? (
-                    <Film key={film.id}>
+                {filmsList["2021"] &&
+                  filmsList["2020"].map((film) => (
+                    <Film key={film.film_id}>
                       <FilmImg src={FilmImgSrc} />
                       <FilmDetail to={"film"} />
                     </Film>
-                  ) : null
-                )}
+                  ))}
               </FilmBox>
             </YearBox>
           </ContentBox>
-          <FilmCounter borderColor={colors.borderColor}></FilmCounter>
+          <FilmCounter borderColor={colors.borderColor}>
+            <CounterBox>
+              <CounterImg src={grey} />
+              <Counter>{count.film_big}</Counter>
+            </CounterBox>
+            <CounterBox>
+              <CounterImg src={red} />
+              <Counter>{count.film_medium}</Counter>
+            </CounterBox>
+            <CounterBox>
+              <CounterImg src={yellow} />
+              <Counter>{count.film_small}</Counter>
+            </CounterBox>
+            <CounterTotal>total:{count.total}</CounterTotal>
+          </FilmCounter>
         </Frame>
         <MainNavMini />
         <AlbumNavMini />

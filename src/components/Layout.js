@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { colors } from "../colors";
 
-const Container = styled.div<ContainerProps>`
+const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: ${(props) => props.bgColor};
@@ -59,13 +60,9 @@ const StyledLink = styled(Link)`
   color: black;
 `;
 
-interface ContainerProps {
-  bgColor: string;
-}
-
-const Layout = ({ bgColor }: ContainerProps) => {
+const Layout = () => {
   return (
-    <Container bgColor={bgColor}>
+    <Container bgColor={colors.bgColor}>
       <Header>
         <ColumnLeft>
           <Logo>📽</Logo>

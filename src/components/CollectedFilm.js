@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import filmEdge from "../assets/edge.png";
 import filmCase from "../assets/case.png";
 import filmFrame from "../assets/frame.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router";
 import { GoRead } from "./navigation";
+import { useParams } from "react-router";
 
 const Container = styled.div`
   display: flex;
@@ -57,31 +55,45 @@ const Thumbnail = styled.img`
 `;
 
 const CollectedFilm = () => {
-  const [photoes, setPhotoes] = useState([
-    {
-      id: "1",
-      src: "https://www.imgacademy.com/themes/custom/imgacademy/images/helpbox-contact.jpg",
-      current: false,
-    },
-    {
-      id: "2",
-      src: "https://www.imgacademy.com/themes/custom/imgacademy/images/helpbox-contact.jpg",
-      current: false,
-    },
-    { id: "3", src: null, current: true },
-    { id: "4", src: null, current: false },
-    { id: "5", src: null, current: false },
-    { id: "6", src: null, current: false },
-    { id: "7", src: null, current: false },
-    { id: "8", src: null, current: false },
-    { id: "9", src: null, current: false },
-    { id: "10", src: null, current: false },
-    { id: "11", src: null, current: false },
-    { id: "12", src: null, current: false },
-    { id: "13", src: null, current: false },
-    { id: "14", src: null, current: false },
-    { id: "15", src: null, current: false },
-  ]);
+  // const [photoes, setPhotoes] = useState([
+  //   {
+  //     id: "1",
+  //     src: "https://www.imgacademy.com/themes/custom/imgacademy/images/helpbox-contact.jpg",
+  //     current: false,
+  //   },
+  //   {
+  //     id: "2",
+  //     src: "https://www.imgacademy.com/themes/custom/imgacademy/images/helpbox-contact.jpg",
+  //     current: false,
+  //   },
+  //   { id: "3", src: null, current: true },
+  //   { id: "4", src: null, current: false },
+  //   { id: "5", src: null, current: false },
+  //   { id: "6", src: null, current: false },
+  //   { id: "7", src: null, current: false },
+  //   { id: "8", src: null, current: false },
+  //   { id: "9", src: null, current: false },
+  //   { id: "10", src: null, current: false },
+  //   { id: "11", src: null, current: false },
+  //   { id: "12", src: null, current: false },
+  //   { id: "13", src: null, current: false },
+  //   { id: "14", src: null, current: false },
+  //   { id: "15", src: null, current: false },
+  // ]);
+
+  const [films, setFilms] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(`/film/${id}`);
+      const json = await response.json();
+      setFilms(json.diaries);
+    })();
+    setLoading(false);
+  }, []);
+  console.log(films);
 
   //   useEffect(() => {
   //     (async () => {
@@ -97,14 +109,16 @@ const CollectedFilm = () => {
   //     })();
   //   }, [photoes]);
 
-  return (
+  return loading ? (
+    "loading..."
+  ) : (
     <Container>
       <FilmCase src={filmCase} />
       <Films>
-        {photoes.map((photo) => (
-          <Film key={photo.id}>
+        {films.map((film) => (
+          <Film key={film.id}>
             <FilmFrame src={filmFrame} />
-            <Thumbnail key={photo.id} src={photo.src} />
+            <Thumbnail key={film.diary} src={film.image} />
             <GoRead />
           </Film>
         ))}

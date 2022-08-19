@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import filmEdge from "../assets/edge.png";
 import filmCase from "../assets/case.png";
@@ -6,11 +6,43 @@ import filmFrame from "../assets/frame.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router";
+import film from "../assets/film.jpg";
+import button from "../assets/button.jpg";
+import { colors } from "../colors";
+import printImg from "../assets/print.png";
 
-const Container = styled.div`
+const EmptyFilm = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+const SelectFilm = styled.button`
+  border: none;
+  background-color: white;
+  width: 11.5vw;
+  height: 6.25vh;
+  position: absolute;
+  bottom: 2.5%;
+  right: 5%;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const SelectFilmImg = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+const ContextBox = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  background-color: ${(props) => props.mainBgColor};
+  width: 93%;
+  height: 83%;
+  margin-bottom: 5.5%;
+  box-shadow: inset 0px 2px 5px -2px rgba(0, 0, 0, 0.8);
 `;
 
 const FilmCase = styled.img`
@@ -53,11 +85,10 @@ const Thumbnail = styled.img`
 
 const AddBtn = styled.button`
   position: absolute;
-  z-index: 3;
+  z-index: 5;
   width: 21%;
   height: 22%;
   border-radius: 50%;
-  border: none;
   top: 40%;
   right: 40%;
   display: flex;
@@ -79,39 +110,71 @@ const Blur = styled.div`
   opacity: 0.8;
 `;
 
-// interface PhotoData {
-//   id: string;
-//   src: null;
-//   current: boolean;
-//   prev: boolean;
-// }
+const StoryCounter = styled.div`
+  position: absolute;
+  right: 6.5%;
+  bottom: 5%;
+  font-size: larger;
+  font-weight: 700;
+  color: #545454;
+`;
 
-const OpenedFilm = () => {
+const PrintBtn = styled.button`
+  border: none;
+  background-color: white;
+  width: 11.5vw;
+  height: 6.5vh;
+  position: absolute;
+  bottom: 2.5%;
+  right: 5%;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const PrintImg = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+const MainFilm = () => {
   const [photoes, setPhotoes] = useState([
-    {
-      id: "1",
-      src: "https://www.imgacademy.com/themes/custom/imgacademy/images/helpbox-contact.jpg",
-      current: false,
-    },
-    {
-      id: "2",
-      src: "https://www.imgacademy.com/themes/custom/imgacademy/images/helpbox-contact.jpg",
-      current: false,
-    },
-    { id: "3", src: null, current: true },
-    { id: "4", src: null, current: false },
-    { id: "5", src: null, current: false },
-    { id: "6", src: null, current: false },
-    { id: "7", src: null, current: false },
-    { id: "8", src: null, current: false },
-    { id: "9", src: null, current: false },
-    { id: "10", src: null, current: false },
-    { id: "11", src: null, current: false },
-    { id: "12", src: null, current: false },
-    { id: "13", src: null, current: false },
-    { id: "14", src: null, current: false },
-    { id: "15", src: null, current: false },
+    { diary: "1", image: null, curr: true },
+    { diary: "2", image: null, curr: true },
+    { diary: "3", image: null, curr: true },
+    { diary: "4", image: null, curr: true },
+    { diary: "5", image: null, curr: true },
+    { diary: "6", image: null, curr: true },
+    { diary: "7", image: null, curr: true },
+    { diary: "8", image: null, curr: true },
+    { diary: "9", image: null, curr: true },
+    { diary: "10", image: null, curr: true },
+    { diary: "11", image: null, curr: true },
+    { diary: "12", image: null, curr: true },
+    { diary: "13", image: null, curr: true },
+    { diary: "14", image: null, curr: true },
+    { diary: "15", image: null, curr: true },
   ]);
+
+  const [films, setFilms] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch("/film/");
+      const json = await response.json();
+      const result = json.contents;
+      const cnt = result.length;
+      setCount(cnt);
+      const array = result.concat(photoes.splice(11, 15 - cnt));
+      console.log("array", array);
+      setPhotoes(array);
+      setFilms(json);
+    })();
+
+    setLoading(false);
+  }, []);
 
   const navigate = useNavigate();
   const addStory = () => {
@@ -132,24 +195,46 @@ const OpenedFilm = () => {
   //     })();
   //   }, [photoes]);
 
-  return (
-    <Container>
-      <FilmCase src={filmCase} />
-      {photoes.map((photo) => (
-        <Film key={photo.id}>
-          <FilmFrame src={filmFrame} />
-          <Thumbnail key={photo.id} src={photo.src} />
-          {photo.current ? (
-            <AddBtn onClick={addStory}>
-              <FontAwesomeIcon icon={faCirclePlus} size="2x" />
-            </AddBtn>
-          ) : null}
-          {photo.src !== null ? <Blur /> : null}
-        </Film>
-      ))}
-      <FilmEdge src={filmEdge} />
-    </Container>
+  return loading ? (
+    "loading..."
+  ) : films.curr_film === null ? (
+    <>
+      <ContextBox mainBgColor={colors.mainBgColor}>
+        <EmptyFilm src={film} alt="Empty-Film" />
+      </ContextBox>
+      <SelectFilm>
+        <SelectFilmImg src={button} alt="Select Film" />
+      </SelectFilm>
+    </>
+  ) : (
+    <>
+      <ContextBox mainBgColor={colors.mainBgColor}>
+        <FilmCase src={filmCase} />
+        {photoes.map((photo) => (
+          <Film key={photo.diary}>
+            <FilmFrame src={filmFrame} />
+            <Thumbnail src={photo.image} />
+            {count === photoes.indexOf(photo) ? (
+              <AddBtn onClick={addStory}>
+                <FontAwesomeIcon icon={faCirclePlus} size="2x" />
+              </AddBtn>
+            ) : null}
+            {photo.image !== null ? <Blur /> : null}
+          </Film>
+        ))}
+        <FilmEdge src={filmEdge} />
+      </ContextBox>
+      {count === 15 ? (
+        <PrintBtn>
+          <PrintImg src={printImg} />
+        </PrintBtn>
+      ) : (
+        <StoryCounter>
+          {count}/{films.film_size}
+        </StoryCounter>
+      )}
+    </>
   );
 };
 
-export default OpenedFilm;
+export default MainFilm;

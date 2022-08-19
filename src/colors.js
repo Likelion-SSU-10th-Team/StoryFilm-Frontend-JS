@@ -8,4 +8,5 @@ export const colors = {
   mainBgColor: "#D3C7BD",
   filmBgColor: "#EDE5DB",
   borderColor: "#CECECE",
+  albumBgColor: "#F3F0EA",
 };
