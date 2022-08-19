@@ -166,7 +166,7 @@ const Album = () => {
                     <DiaryDate>{diary.created_at}</DiaryDate>
                     <DiaryImg src={photoImg} />
                     <DiaryThumbnail src={diary.image} />
-                    <GoRead />
+                    <GoRead id={diary.diary_id} />
                   </Diary>
                 ))}
               </DiaryBox>

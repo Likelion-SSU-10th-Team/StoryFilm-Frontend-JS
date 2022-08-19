@@ -176,10 +176,18 @@ export const GoBack = () => {
   );
 };
 
-export const GoRead = () => {
+export const GoLogin = () => {
+  const navigate = useNavigate();
+  const goLogin = () => {
+    navigate(`/login`);
+  };
+  return <GoReadBtn onClick={goLogin} />;
+};
+
+export const GoRead = ({ id }) => {
   const navigate = useNavigate();
   const goRead = () => {
-    navigate("/read");
+    navigate(`/read/${id}`);
   };
   return <GoReadBtn onClick={goRead} />;
 };

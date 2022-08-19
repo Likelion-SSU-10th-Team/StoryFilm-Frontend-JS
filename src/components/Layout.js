@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../colors";
 
@@ -18,6 +18,7 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   box-shadow: 0px 5px 9px -6px #000000;
+  z-index: 5;
 `;
 
 const Column = styled.div`
@@ -48,6 +49,9 @@ const Logout = styled.button`
   margin-left: 2%;
   border: none;
   background-color: white;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -61,6 +65,19 @@ const StyledLink = styled(Link)`
 `;
 
 const Layout = () => {
+  const [username, setUsername] = useState("");
+  useEffect(() => {
+    (async () => {
+      const response = await fetch("/accounts/info");
+      const json = await response.json();
+      setUsername(json.name);
+    })();
+  }, []);
+  const navigate = useNavigate();
+  const goLogin = () => {
+    navigate(`/login`);
+  };
+
   return (
     <Container bgColor={colors.bgColor}>
       <Header>
@@ -71,9 +88,9 @@ const Layout = () => {
           </StyledLink>
         </ColumnLeft>
         <ColumnRight>
-          <Profile>김상민's story</Profile>
+          <Profile>{username}'s story</Profile>
           <span>|</span>
-          <Logout>로그아웃</Logout>
+          <Logout onClick={goLogin}>로그아웃</Logout>
         </ColumnRight>
       </Header>
     </Container>

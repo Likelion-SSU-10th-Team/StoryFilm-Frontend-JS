@@ -5,6 +5,7 @@ import filmCase from "../assets/case.png";
 import filmFrame from "../assets/frame.png";
 import { GoRead } from "./navigation";
 import { useParams } from "react-router";
+import Loading from "./Loading";
 
 const Container = styled.div`
   display: flex;
@@ -90,8 +91,8 @@ const CollectedFilm = () => {
       const response = await fetch(`/film/${id}`);
       const json = await response.json();
       setFilms(json.diaries);
+      // setLoading(false);
     })();
-    setLoading(false);
   }, []);
   console.log(films);
 
@@ -110,16 +111,16 @@ const CollectedFilm = () => {
   //   }, [photoes]);
 
   return loading ? (
-    "loading..."
+    <Loading />
   ) : (
     <Container>
       <FilmCase src={filmCase} />
       <Films>
         {films.map((film) => (
-          <Film key={film.id}>
+          <Film key={film.diary_id}>
             <FilmFrame src={filmFrame} />
-            <Thumbnail key={film.diary} src={film.image} />
-            <GoRead />
+            <Thumbnail src={film.image} />
+            <GoRead id={film.diary_id} />
           </Film>
         ))}
         <FilmEdge src={filmEdge} />

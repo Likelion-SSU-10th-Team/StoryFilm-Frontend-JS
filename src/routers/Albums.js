@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { colors } from "../colors";
 import Layout from "../components/Layout";
-import { FilmNavMini, GoRead, MainNavMini } from "../components/navigation";
+import { FilmNavMini, MainNavMini } from "../components/navigation";
 import shelf from "../assets/shelf.png";
 import { Link } from "react-router-dom";
 
@@ -131,7 +131,7 @@ const Albums = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch("/album/");
+      const response = await fetch("/album");
       const json = await response.json();
       setAlbums(json.albums);
     })();

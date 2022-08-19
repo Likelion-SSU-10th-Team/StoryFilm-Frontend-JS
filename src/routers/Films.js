@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import red from "../assets/red.png";
 import yellow from "../assets/yellow.png";
 import grey from "../assets/grey.png";
+import Loading from "../components/Loading";
 
 const Container = styled.div``;
 
@@ -147,8 +148,8 @@ const Films = () => {
       const counterJson = await counter.json();
       setFilmsList(json);
       setCount(counterJson);
+      setLoading(false);
     })();
-    setLoading(false);
   }, []);
   console.log(count);
   console.log(filmsList["2022"]);
@@ -189,39 +190,51 @@ const Films = () => {
           <ContentBox bgColor={colors.filmBgColor}>
             <YearBox>
               <Year>2022</Year>
-              <FilmBox>
-                {filmsList["2022"] &&
-                  filmsList["2022"].map((film) => (
-                    <Film key={film.film_id}>
-                      <FilmImg src={FilmImgSrc} />
-                      <FilmDetail to={`film/${film.film_id}`} />
-                    </Film>
-                  ))}
-              </FilmBox>
+              {loading ? (
+                <Loading />
+              ) : (
+                <FilmBox>
+                  {filmsList["2022"] &&
+                    filmsList["2022"].map((film) => (
+                      <Film key={film.film_id}>
+                        <FilmImg src={FilmImgSrc} />
+                        <FilmDetail to={`film/${film.film_id}`} />
+                      </Film>
+                    ))}
+                </FilmBox>
+              )}
             </YearBox>
             <YearBox>
               <Year>2021</Year>
-              <FilmBox>
-                {filmsList["2021"] &&
-                  filmsList["2021"].map((film) => (
-                    <Film key={film.film_id}>
-                      <FilmImg src={FilmImgSrc} />
-                      <FilmDetail to={"film"} />
-                    </Film>
-                  ))}
-              </FilmBox>
+              {loading ? (
+                <Loading />
+              ) : (
+                <FilmBox>
+                  {filmsList["2021"] &&
+                    filmsList["2021"].map((film) => (
+                      <Film key={film.film_id}>
+                        <FilmImg src={FilmImgSrc} />
+                        <FilmDetail to={`film/${film.film_id}`} />
+                      </Film>
+                    ))}
+                </FilmBox>
+              )}
             </YearBox>
             <YearBox>
               <Year>2020</Year>
-              <FilmBox>
-                {filmsList["2021"] &&
-                  filmsList["2020"].map((film) => (
-                    <Film key={film.film_id}>
-                      <FilmImg src={FilmImgSrc} />
-                      <FilmDetail to={"film"} />
-                    </Film>
-                  ))}
-              </FilmBox>
+              {loading ? (
+                <Loading />
+              ) : (
+                <FilmBox>
+                  {filmsList["2020"] &&
+                    filmsList["2020"].map((film) => (
+                      <Film key={film.film_id}>
+                        <FilmImg src={FilmImgSrc} />
+                        <FilmDetail to={`film/${film.film_id}`} />
+                      </Film>
+                    ))}
+                </FilmBox>
+              )}
             </YearBox>
           </ContentBox>
           <FilmCounter borderColor={colors.borderColor}>

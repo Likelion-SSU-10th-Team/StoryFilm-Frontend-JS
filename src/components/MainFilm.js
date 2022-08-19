@@ -164,19 +164,27 @@ const MainFilm = () => {
     (async () => {
       const response = await fetch("/film/");
       const json = await response.json();
+
+      json.curr_film ? setFilms(null) : setFilms(json);
       const result = json.contents;
       const cnt = result.length;
       setCount(cnt);
       const array = result.concat(photoes.splice(11, 15 - cnt));
-      console.log("array", array);
+
       setPhotoes(array);
-      setFilms(json);
     })();
 
     setLoading(false);
   }, []);
+  console.log(films);
 
   const navigate = useNavigate();
+  const goPrint = () => {
+    navigate("/print");
+  };
+  const goSelect = () => {
+    navigate("/select");
+  };
   const addStory = () => {
     navigate("/write");
   };
@@ -202,7 +210,7 @@ const MainFilm = () => {
       <ContextBox mainBgColor={colors.mainBgColor}>
         <EmptyFilm src={film} alt="Empty-Film" />
       </ContextBox>
-      <SelectFilm>
+      <SelectFilm onClick={goSelect}>
         <SelectFilmImg src={button} alt="Select Film" />
       </SelectFilm>
     </>
@@ -225,7 +233,7 @@ const MainFilm = () => {
         <FilmEdge src={filmEdge} />
       </ContextBox>
       {count === 15 ? (
-        <PrintBtn>
+        <PrintBtn onClick={goPrint}>
           <PrintImg src={printImg} />
         </PrintBtn>
       ) : (

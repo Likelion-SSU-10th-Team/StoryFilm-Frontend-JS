@@ -44,9 +44,13 @@ const Input = styled.div`
   padding: 1vw;
   letter-spacing: 0.1vw; //글자 간격
   line-height: 2vw; // 줄 간격
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 `;
 const Frame = styled.img`
-  margin-top: 5.2vw;
+  bottom: 0;
   background-color: white;
   width: 43vw;
   height: 43vw;
@@ -69,11 +73,20 @@ const BackBtn = styled.button`
 
 const Photoadd = styled.img`
   width: 20vw;
-  margin-top: 10vw;
-  margin-left: 45vw;
+  margin-top: 13vw;
+  margin-left: 46vw;
   height: 15vw;
-  z-index: 2;
+  z-index: 5;
   position: absoulte;
+`;
+const ImgPreview = styled.img`
+  margin-top: 15.4vw;
+  margin-left: 48vw;
+  width: 16vw;
+  height: 9vw;
+  position: absolute;
+  transform: rotate(-5.2deg);
+  z-index: 5;
 `;
 //앨범 추가
 const CheckBox = styled.input`
@@ -92,19 +105,19 @@ const CheckBox = styled.input`
 const Label = styled.div`
   padding-top: 2vw;
   font-size: 1.3vw;
-  margin-top: 2vw;
   text-align: center;
+  font-weight: 600;
 `;
 const Label2 = styled.div`
   position: absolute;
   margin-top: 3.5vw;
   margin-left: 6.5vw;
 `;
-const Check_text = styled.label`
+const CheckText = styled.label`
   position: relative;
   text-align: center;
-  top: 1px;
-  font-size: 2vw;
+  bottom: 50%;
+  font-size: 1.2vw;
 `;
 
 const Add = styled.button`
@@ -135,6 +148,12 @@ const CategoryInput = styled.input`
 `;
 //comment
 
+const ContentBox = styled.div`
+  position: absolute;
+  top: 10vh;
+  left: 67vw;
+`;
+
 const Select = styled.div`
   margin: 0 auto;
   margin-top: 5.2vw;
@@ -143,7 +162,19 @@ const Select = styled.div`
   width: 17.4vw;
   height: 14.4vw;
   background-color: #cec1ae;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 `;
+
+const AlbumCheck = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 1.5%;
+`;
+
 const CommentFrame = styled.div`
   position: relative;
 `;
@@ -158,7 +189,6 @@ const Comment = styled.img`
 
 const CommentDate = styled.div`
   position: absolute;
-  background-color: white;
   margin-top: 6vw;
   width: 5vw;
   height: 1vw;
@@ -181,7 +211,6 @@ const CommentBtn = styled.button`
   position: absolute;
   width: 3.5vw;
   height: 1.5vw;
-
   background-color: #545454;
   margin-left: 12vw;
   margin-top: 15vw;
@@ -202,88 +231,96 @@ const FinalSubmit = styled.button`
   border-radius: 14px;
   color: white;
 `;
+
+const GoBackBtn = styled.div`
+  position: absolute;
+  top: 10%;
+  left: 5%;
+`;
+
+const CommentDiv = styled.div``;
 const Read = () => {
   const [content, setContent] = useState("");
   const [img, setImg] = useState("");
-  const [album, setAlbum] = useState([
-    {
-      album_id: 0,
-      album_name: "",
-      isBelong: false,
-    },
-  ]);
+  // const [album, setAlbum] = useState([
+  //   {
+  //     album_id: 0,
+  //     album_name: "",
+  //     isBelong: false,
+  //   },
+  // ]);
 
-  const [comments, setComments] = useState([
-    {
-      comment: "",
-      createdAt: "",
-    },
-  ]);
-  const [response, setResponse] = useState([]);
-
+  // const [comments, setComments] = useState([
+  //   {
+  //     comment: "",
+  //     createdAt: "",
+  //   },
+  // ]);
+  // {album_id, album_name, isBelong}
+  const [useralbum, setUseralbum] = useState([]);
+  // content, created,at, image
+  const [diaryinfo, setDiaryInfo] = useState([]);
+  //{comment, createdAt}
+  const [diarycomment, setDiaryComment] = useState([]);
+  const { id } = useParams();
   useEffect(() => {
-    axios.get("/album/edit/33").then((res) => {
+    axios.get(`/album/edit/${id}`).then((res) => {
       console.log("data", res.data);
-      setResponse(res.data.user_albums);
-      setContent(res.data.diary_info.content);
-      setImg(res.data.diary_info.image);
-      setAlbum(res.data.user_albums);
-      setComments(res.data.diary_comment);
+      setUseralbum(res.data.user_albums);
+      setDiaryInfo(res.data.diary_info);
+      setDiaryComment(res.data.diary_comment);
+
+      // setComments(res.data.diary_comment);
       // console.log(content);
       // console.log(img);
       // console.log(album);
       // console.log(comments);
     });
   }, []);
+  console.log("photo, text", diaryinfo);
 
   const navigate = useNavigate();
-  // axios.get("/");
-  // axios.get("/diary/write/").then((res) => {
-  //   console.log(res);
-  // });
-  // 카테고리 출력 & 기본
-  const [categorys, setCategorys] = useState([
-    {
-      num: album.album_id,
-      data: album.album_name,
-    },
-  ]);
-  const [inputs, setInputs] = useState({
-    num: "",
-    data: "",
-  });
-  const { num, data } = inputs;
 
+  // 카테고리 추가
+
+  const [inputs, setInputs] = useState({
+    album_id: "",
+    album_name: "",
+  });
+  //const { album_id, album_name } = inputs;
+
+  const nextId = useRef(inputs.album_id + 1);
   const onChange = (e) => {
-    const { num, data } = e.target;
+    // const { album_id, album_name } = e.target;
     setInputs({
-      ...inputs,
-      data: e.target.value,
+      album_name: e.target.value,
+      album_id: nextId,
     });
   };
   console.log("input", inputs);
-  const nextId = useRef(4);
-  console.log("categorys", categorys);
 
   // 카테고리 추가
   const onSubmit = (e) => {
     e.preventDefault();
-    const category = {
-      num: nextId.current,
-      data: inputs.data,
-    };
+    axios
+      .post("/album/new/", {
+        album_id: inputs.album_id,
+        album_name: inputs.album_name,
+      })
+      .then((res) => console.log(res));
 
-    setCategorys(categorys.concat(category));
+    // setCategorys(categorys.concat(category));
     setInputs({
       num: "",
       data: "",
     });
     nextId.current += 1;
-    console.log("categorys2", categorys);
+    // console.log("categorys2", categorys);
   };
 
   //앨범 선택 값 넘기기
   const [checkedInputs, setCheckedInputs] = useState([]);
+
   const changeHandler = (e) => {
     if (e.target.checked) {
       setCheckedInputs([...checkedInputs, e.target.value]);
@@ -294,11 +331,11 @@ const Read = () => {
     addcomment: "",
     createdAt: "",
   });
-  // const { addcomment, createdAt } = adds;
-  const addcomment = adds.addcomment;
-  const createdAt = adds.createdAt;
+  const now = new Date();
+  const { addcomment, createdAt } = adds;
+  // const addcomment = adds.addcomment;
+  // const createdAt = adds.createdAt;
   const commentAdd = (e) => {
-    let now = new Date();
     setAdds({
       ...adds,
       addcomment: e.target.value,
@@ -306,11 +343,9 @@ const Read = () => {
     });
   };
   const HandleFinalSubmit = () => {
-    const album_id = album.album_id;
-    const album_name = album.album_name;
     axios
       .post(
-        `/album/${album_id}/${album_name}/select_album`,
+        "/album/select",
         {
           selected_album: checkedInputs,
         },
@@ -324,13 +359,15 @@ const Read = () => {
     e.preventDefault();
     console.log(commented);
   };
+  // comment 에 입력한 내용을 남기기 버튼 누르면 전송
   const postComment = (e) => {
     setComment(e.target.value);
     axios
       .post(
-        "/album/edit/<diary_id>",
+        `/album/edit/${id}`,
         {
           comment: commented,
+          diary_id: id,
         },
         {
           headers: {
@@ -346,36 +383,33 @@ const Read = () => {
     <Container>
       <Layout bgColor={colors.bgColor} />
       <Body>
-        <div>
-          <BackBtn onClick={() => navigate(-1)}>이전</BackBtn>
-        </div>
         <Con>
           <Photoadd src={Photo} alt="photo" />
-
+          <ImgPreview src={diaryinfo.image} alt="photo" />
           <Input
             // ref= {contentInput}
             placeholder="입력하세요"
             type="text"
-            //value= {write}
-            content="content"
-          />
+          >
+            {diaryinfo.content}
+          </Input>
           <Frame src={diary} slt="diary" />
-          <div>
+          <ContentBox>
             <Select>
               <Label>앨범선택</Label>
-              {response.map((album) => (
-                <div key={album.album_id}>
+              {useralbum.map((album) => (
+                <AlbumCheck key={album.album_id}>
                   <CheckBox
                     type="checkbox"
                     value={album.isBelong}
                     onChange={changeHandler}
                   />
-                  <Check_text>{album.album_name}</Check_text>
-                </div>
+                  <CheckText>{album.album_name}</CheckText>
+                </AlbumCheck>
               ))}
               <AddCate onSubmit={onSubmit}>
                 <CheckBox type="checkbox" />
-                <CategoryInput value={data} onChange={onChange} />
+                <CategoryInput value={inputs.album_name} onChange={onChange} />
                 <Add>완료</Add>
               </AddCate>
             </Select>
@@ -383,11 +417,12 @@ const Read = () => {
               <CommentFrame>
                 <Comment src={Subtract} slt="subtract" />
                 <Label2>comment</Label2>
-                {comments.map((item) => (
+                {diarycomment.map((item) => (
                   <div key={item.comment}>
-                    <CommentDate value={item.createdAt} />
-                    <div>{item.comment}</div>
-                    {/* <CommentInput value={item.comment} onChange={commentAdd} /> */}
+                    <CommentDate value={item.createdAt}>
+                      {item.createdAt}
+                    </CommentDate>
+                    <CommentDiv>{item.comment}</CommentDiv>
                   </div>
                 ))}
                 <CommentInput
@@ -396,11 +431,12 @@ const Read = () => {
                   value={commented}
                 />
                 <CommentDate />
+
                 <CommentBtn onClick={postComment}>남기기</CommentBtn>
               </CommentFrame>
             </Form>
             <FinalSubmit onClick={HandleFinalSubmit}>저장</FinalSubmit>
-          </div>
+          </ContentBox>
         </Con>
       </Body>
     </Container>
