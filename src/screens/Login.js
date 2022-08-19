@@ -233,7 +233,7 @@ const Login = () => {
           alert("비밀번호 다름");
         } //id있는데 pw다름
         else {
-          setCookie(cookies);
+          // setCookie(cookies);
           localStorage.setItem("session_id", ryu.get("session_id"));
         }
         navigate("/");
