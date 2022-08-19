@@ -65,18 +65,18 @@ const StyledLink = styled(Link)`
 `;
 
 const Layout = () => {
-  const [username, setUsername] = useState("");
-  useEffect(() => {
-    (async () => {
-      const response = await fetch("/accounts/info");
-      const json = await response.json();
-      setUsername(json.name);
-    })();
-  }, []);
-  const navigate = useNavigate();
-  const goLogin = () => {
-    navigate(`/login`);
-  };
+  // const [username, setUsername] = useState("");
+  // useEffect(() => {
+  //   (async () => {
+  //     const response = await fetch("/accounts/info");
+  //     const json = await response.json();
+  //     setUsername(json.name);
+  //   })();
+  // }, []);
+  // const navigate = useNavigate();
+  // const goLogin = () => {
+  //   navigate(`/login`);
+  // };
 
   return (
     <Container bgColor={colors.bgColor}>
@@ -88,9 +88,9 @@ const Layout = () => {
           </StyledLink>
         </ColumnLeft>
         <ColumnRight>
-          <Profile>{username}'s story</Profile>
+          <Profile>김상민's story</Profile>
           <span>|</span>
-          <Logout onClick={goLogin}>로그아웃</Logout>
+          <Logout>로그아웃</Logout>
         </ColumnRight>
       </Header>
     </Container>

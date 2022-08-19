@@ -55,7 +55,7 @@ export default function Home() {
           </Body>
         </Container>
       ) : (
-        <Navigate to="/login" />
+        <Navigate to="/" />
       )}
     </>
   );

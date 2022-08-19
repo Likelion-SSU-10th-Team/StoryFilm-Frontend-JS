@@ -66,7 +66,6 @@ const Input = styled.input`
   box-shadow: 1px 6px 4px 0px rgba(129, 129, 129, 0.65);
   background-color: #d9d9d9;
   justify-content: center;
-  margin-top: 14vw;
   margin-bottom: 0vw;
 `;
 const Input2 = styled.input`
@@ -130,13 +129,16 @@ const Register = () => {
   const Signup = () => {
     const navigate = useNavigate();
     axios
-      .post("/accounts/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(inputs),
-      })
+      .post(
+        "https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/accounts/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(inputs),
+        }
+      )
       .then((body) => console.log("성공", body))
       .then(() => navigate("/"));
   };
