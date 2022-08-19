@@ -218,10 +218,13 @@ const Login = () => {
     event.preventDefault();
     axios.defaults.withCredentials = true;
     axios
-      .post("/accounts/login", {
-        email: id,
-        password: password,
-      })
+      .post(
+        "https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/accounts/login",
+        {
+          email: id,
+          password: password,
+        }
+      )
       .then((res) => {
         console.log(res);
         if (cookies.session_id === 404) {

@@ -151,15 +151,10 @@ const Register = () => {
           <Title>STORY FILM </Title>
           <ImgFilm src={login} alt="login" />
 
-          <Form method="POST">
-            <Input
-              id="name"
-              name="name"
-              value={name}
-              placeholder="이름를 입력하세요"
-              type="text"
-              onChange={onChange}
-            />
+          <Form
+            action="https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/accounts/register"
+            method="POST"
+          >
             <Input2
               id="id"
               name="email"
@@ -174,6 +169,14 @@ const Register = () => {
               value={password}
               name="password"
               placeholder="비밀번호를 입력하세요"
+              onChange={onChange}
+            />
+            <Input
+              id="name"
+              name="name"
+              value={name}
+              placeholder="이름를 입력하세요"
+              type="text"
               onChange={onChange}
             />
             <Button onClick={Signup} type="submit">

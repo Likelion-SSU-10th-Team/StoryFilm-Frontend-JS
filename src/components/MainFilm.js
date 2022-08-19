@@ -162,7 +162,9 @@ const MainFilm = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch("/film/");
+      const response = await fetch(
+        "https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/film/"
+      );
       const json = await response.json();
 
       json.curr_film ? setFilms(null) : setFilms(json);
