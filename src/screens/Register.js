@@ -126,19 +126,18 @@ const Register = () => {
       [name]: value,
     });
   };
-  const Signup = () => {
+  const Signup = async () => {
     const navigate = useNavigate();
-    axios
-      .post(
-        "https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/accounts/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(inputs),
-        }
-      )
+    await fetch(
+      "https://port-0-backend-django-1k5zz25l6f9nen1.gksl1.cloudtype.app/accounts/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputs),
+      }
+    )
       .then((body) => console.log("성공", body))
       .then(() => navigate("/"));
   };

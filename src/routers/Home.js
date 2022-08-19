@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { AlbumNav, FilmNav } from "../components/navigation";
 import MainFilm from "../components/MainFilm";
 import { Navigate } from "react-router";
+import { Cookies } from "react-cookie";
 
 const Container = styled.div``;
 
@@ -33,6 +34,7 @@ const Frame = styled.div`
 `;
 
 export default function Home() {
+  const ryu = new Cookies();
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [storage, setStorage] = localStorage.getItem("session_id");
 
